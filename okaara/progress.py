@@ -19,7 +19,7 @@ take a Prompt as the output writer. The caller is responsible the iteration
 and will call the appropriate method in each object to make it display the
 current state.
 """
-from __future__ import division
+
 from future import standard_library
 standard_library.install_aliases()
 from builtins import object

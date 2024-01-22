@@ -298,7 +298,7 @@ class Shell(object):
 
         # Screen menu items
         self.prompt.write('')
-        for item in self.current_screen.items():
+        for item in list(self.current_screen.items()):
             self._render_menu_item(', '.join(item.triggers), item.description)
 
         # Shell triggers

@@ -12,7 +12,7 @@
 #
 # You should have received a copy of the GNU General Public License along with Okaara.
 # If not, see <http://www.gnu.org/licenses/>.
-from __future__ import absolute_import
+
 from builtins import str
 from builtins import object
 
@@ -25,10 +25,7 @@ from .prompt import Prompt
 from functools import reduce
 
 t = gettext.translation('okaara', fallback=True)
-if sys.version_info[0] < 3:
-    _ = t.ugettext
-else:
-    _ = t.gettext
+_ = t.gettext
 
 # -- exceptions ---------------------------------------------------------------
 
@@ -235,7 +232,7 @@ class Command(object):
                 kwarg_dict[o.name] = False
 
         # Clean up option names
-        clean_kwargs = dict([(k.lstrip('-'), v) for k, v in kwarg_dict.items()])
+        clean_kwargs = dict([(k.lstrip('-'), v) for k, v in list(kwarg_dict.items())])
 
         return self.method(*arg_list, **clean_kwargs)
 
@@ -755,7 +752,7 @@ class Section(object):
             template = '%s' + '%-' + str(max_width) + 's - %s'
 
             prompt.write(_('Available Sections:'))
-            for subsection in sorted(self.subsections.values(), key=lambda x: x.name):
+            for subsection in sorted(list(self.subsections.values()), key=lambda x: x.name):
                 wrapped_description = prompt.wrap(subsection.description, remaining_line_indent=(indent + step + max_width + 3))
                 prompt.write(template % (' ' * (indent + step), subsection.name, wrapped_description), skip_wrap=True)
 
@@ -767,7 +764,7 @@ class Section(object):
             template = '%s' + '%-' + str(max_width) + 's - %s'
 
             prompt.write(_('Available Commands:'))
-            for command in sorted(self.commands.values(), key=lambda x: x.name):
+            for command in sorted(list(self.commands.values()), key=lambda x: x.name):
                 wrapped_description = prompt.wrap(command.description, remaining_line_indent=(indent + step + max_width + 3))
                 prompt.write(template % (' ' * (indent + step), command.name, wrapped_description), skip_wrap=True)
 
